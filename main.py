@@ -45,7 +45,7 @@ for settings in content1:
             print("[!] Installing Fish as a Default Kernel(This will take a while)")
             try:
                 check_output('sudo apt-get install fish -y', shell=True)
-                check_output("echo /bin/fish > /$USER/.bashrc", shell=True)
+                check_output("echo /bin/fish >> /$USER/.bashrc", shell=True)
             except:
                 print("Add FIsh as a REPO (sudo apt-add-repository ppa:fish-shell/release-3)")
             print("Fish is now your default console")
