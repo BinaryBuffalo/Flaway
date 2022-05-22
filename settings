@@ -1,0 +1,8 @@
+Install antivirus software       : False
+make software a startup service  : False
+Change Default Kernal to FISH    : False
+Disable Port Scanning on machine : False 
+Secure your machines ports       : False
+install firewall(Netfilter)      : False
+Update & Upgrade your Kernel     : False
+Change Default SSH port          : 22
