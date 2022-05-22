@@ -80,6 +80,7 @@ for settings in content1:
                 print("[!] Something went wrong")
     #change your Secure Shell port (This will change any configurations you already have set)
     if content1.index(settings) == 7:
+        if "TRUE" in arch1.upper():
             print(" What Port would you like to use ? ")
             while True:
                 try:

@@ -5,4 +5,4 @@ Disable Port Scanning on machine : False
 Secure your machines ports       : False
 install firewall(Netfilter)      : False
 Update & Upgrade your Kernel     : False
-Change Default SSH port          : 22
+Change Default SSH port          : False
