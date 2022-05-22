@@ -2,7 +2,7 @@
 Flaway is a Custom kernel setup configuration menu that is coded in python that automated some default setup configrations in order to have as least amount of downtime as possible.
 
 What operating systems is this used for?   
-  Debian | Ubuntu | Some Features Like the netfilter install may be different depending on your OS
+  Debian | Ubuntu | (Not tested on other (OS))
 All code was tested & debugged through the python3.9.0 Shell.
 
 
