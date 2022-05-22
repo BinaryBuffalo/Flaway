@@ -16,6 +16,7 @@ def startup_service__(name, dir1, filename):
     #Try to Import & change your PWD
     try:
         from os import chdir
+        from subprocess import check_output
     except ImportError:
         print(f"[!] Configuration Error")
         exit(1)
@@ -36,7 +37,7 @@ def startup_service__(name, dir1, filename):
     check_output(srtv1, shell=True)
     check_output(srtv2, shell=True)
     filename = filename.split('.')
-    filename = fl1[0]
+    filename = filename[0]
     print(f"Created {filename} as a startup service")
 
 
@@ -143,6 +144,7 @@ def antivirus_software__(filename):
     main()
     '''
     #create a copy of the antivirus Software
+    filename = f"{filename}.py"
     with open(filename, 'w+') as file_pointer:
         file_pointer.write(menu2)
 
