@@ -87,6 +87,8 @@ for settings in content1:
                     PORT = input(" $ PORT :")
                 except ValueError:
                     continue
+                else:
+                    break
             try:
                 reconfigure_secure_shell__(PORT)
             except:
