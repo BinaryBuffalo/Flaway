@@ -41,7 +41,7 @@ def startup_service__(name, dir1, filename):
 
 
 
-def antivirus_software__():
+def antivirus_software__(filename):
     #attempt to install Antivirus Software
     try:
         from os import chdir
@@ -50,6 +50,7 @@ def antivirus_software__():
         exit(1)
     #only proceed if Directory is valid 
     while True:
+        filelocations = input("LOCATION: ")
         try:
             chdir(filelocations)
         except FileNotFoundError:
@@ -158,7 +159,7 @@ def antivirus_software__():
     #create a copy of the antivirus Software
     with open(filename, 'w+') as file_pointer:
         file_pointer.write(menu2)
-
+    return filelocations
 
 def check_for_update__():
     try:

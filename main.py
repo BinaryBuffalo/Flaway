@@ -10,7 +10,7 @@ from flaway import (secure__Ports__,
 #make a copy in memory of the settings File
 with open('settings') as file_pointer1:
     content1 = file_pointer1.readlines()
-    
+
 installation = False
 for settings in content1:
     arch1 = settings.split(':')
@@ -19,11 +19,10 @@ for settings in content1:
         if "TRUE" in arch1.upper():
             #Installing AntiVirus Software
             print("\t[ INSTALL ANTI VIRUS SOFTWARE ]")
-            filelocations  = input("File Location    : ")
-            dirname        = input("Directory Name   : ")
-            filename       = input("File name        : ")
+            filelocations  = input("Installion DIR: ")
+            filename       = input("File Name    : ")
             try:
-                antivirus_software__(filelocations, filename, dirname)
+                pwd = antivirus_software__()
             except:
                 print("[!] Something went wrong installing anti virus software")
             else:
@@ -34,15 +33,22 @@ for settings in content1:
                 #Making The Antivirus Software a Startup Service 
                 description = input("App Desription : ")
                 try:
-                    startup_service__(description, dirname, filename)
+                    startup_service__(description, filelocations, filename)
                 except:
                     print("[!] Something went wrong creating a startup process")
     if content1.index(settings) == 2:
         if "TRUE" in arch1.upper():
+            #configuring fish this might take a while
+            from subprocess import check_output
             #make Fish your default kernel
-            check_output('sudo apt-get install fish -y', shell=True)
-            check_output("echo /bin/fish > /$USER/.bashrc", shell=True)
+            print("[!] Installing Fish as a Default Kernel(This will take a while)")
+            try:
+                check_output('sudo apt-get install fish -y', shell=True)
+                check_output("echo /bin/fish > /$USER/.bashrc", shell=True)
+            except:
+                print("Add FIsh as a REPO (sudo apt-add-repository ppa:fish-shell/release-3)")
             print("Fish is now your default console")
+
     if content1.index(settings) == 3:
         if "TRUE" in arch1.upper():
             #block ICMP & stealthy port scanning
