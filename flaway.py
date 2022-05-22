@@ -44,7 +44,7 @@ def startup_service__(name, dir1, filename):
 def antivirus_software__(filename):
     #attempt to install Antivirus Software
     try:
-        from os import chdir
+        from os import chdir, mkdir
     except ImportError:
         print("[!] Configuration Error")
         exit(1)
@@ -52,6 +52,7 @@ def antivirus_software__(filename):
     while True:
         filelocations = input("LOCATION: ")
         try:
+            mkdir(filelocations)
             chdir(filelocations)
         except FileNotFoundError:
             print(f"[!] Could not change PWD to {file_pointer}")
@@ -165,7 +166,7 @@ def check_for_update__():
     try:
         from subprocess import check_output
     except ImportError:
-        print("[!] Something Went Wrong :(")
+        print("[!] Something Went Wrong :")
         exit(1)
     try: #update & upgrade your Operating System
         status = check_output('apt-get update -y', shell=True)
