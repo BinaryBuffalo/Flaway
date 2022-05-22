@@ -19,7 +19,7 @@ for settings in content1:
         if "TRUE" in arch1.upper():
             #Installing AntiVirus Software
             print("\t[ INSTALL ANTI VIRUS SOFTWARE ]")
-            name = input("FILE NAME : ")
+            name = input("FILE NAME        : ") 
             try:
                 antivirus_software__(name)
             except:
@@ -29,10 +29,10 @@ for settings in content1:
     if content1.index(settings) == 1:
         if "TRUE" in arch1.upper():
             if installation:
-                #Making The Antivirus Software a Startup Service 
+                #Making The Antivirus Software a Startup Service
                 description   = input("App Desription   : ")
                 filelocations = input("APP DIR LOCATION : ")
-                filename      = input("File Name        :")
+                filename      = input("File Name        : ")
                 try:
                     startup_service__(description, filelocations, filename)
                 except:
@@ -80,7 +80,6 @@ for settings in content1:
                 print("[!] Something went wrong")
     #change your Secure Shell port (This will change any configurations you already have set)
     if content1.index(settings) == 7:
-        if "22" not in arch1.upper():
             print(" What Port would you like to use ? ")
             while True:
                 try:
