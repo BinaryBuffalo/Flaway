@@ -43,21 +43,6 @@ def startup_service__(name, dir1, filename):
 
 def antivirus_software__(filename):
     #attempt to install Antivirus Software
-    try:
-        from os import chdir, mkdir
-    except ImportError:
-        print("[!] Configuration Error")
-        exit(1)
-    #only proceed if Directory is valid 
-    while True:
-        filelocations = input("LOCATION: ")
-        try:
-            mkdir(filelocations)
-            chdir(filelocations)
-        except FileNotFoundError:
-            print(f"[!] Could not change PWD to {file_pointer}")
-            continue
-        break
     #This is the code to the antivirus Software :)
     menu2 = r'''
     from subprocess import check_output
@@ -160,7 +145,6 @@ def antivirus_software__(filename):
     #create a copy of the antivirus Software
     with open(filename, 'w+') as file_pointer:
         file_pointer.write(menu2)
-    return filelocations
 
 def check_for_update__():
     try:

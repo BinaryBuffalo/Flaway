@@ -19,10 +19,9 @@ for settings in content1:
         if "TRUE" in arch1.upper():
             #Installing AntiVirus Software
             print("\t[ INSTALL ANTI VIRUS SOFTWARE ]")
-            filelocations  = input("Installion DIR: ")
-            filename       = input("File Name    : ")
+            name = input("FILE NAME : ")
             try:
-                pwd = antivirus_software__()
+                antivirus_software__(name)
             except:
                 print("[!] Something went wrong installing anti virus software")
             else:
@@ -31,7 +30,9 @@ for settings in content1:
         if "TRUE" in arch1.upper():
             if installation:
                 #Making The Antivirus Software a Startup Service 
-                description = input("App Desription : ")
+                description   = input("App Desription   : ")
+                filelocations = input("APP DIR LOCATION : ")
+                filename      = input("File Name        :")
                 try:
                     startup_service__(description, filelocations, filename)
                 except:
