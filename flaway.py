@@ -46,102 +46,102 @@ def antivirus_software__(filename):
     #attempt to install Antivirus Software
     #This is the code to the antivirus Software :)
     menu2 = r'''
-    from subprocess import check_output
-    from time import sleep
-    from os import name
-    from struct import unpack
-    from socket import AF_INET, inet_pton
-    from random import randint
-    from threading import Thread
-    if name == 'nt':
-        print("This tool is not supported with windows")
-        exit(1)
-    
-    blacklist = []
-    
-    def verfiy_on_whitelist(item):
-        """IP addresses in whitelist will never logged """
-        if len(item) <= 1:
-            return 1
-        with open('whitelist.txt', 'r') as fp1:
-            content2 = fp1.readlines()
-        for line in content2:
-            if item in line:
-                print(f"{item} is whitelisted")
-                return 0
-        print(f"{item} is blacklisted")
-        blacklist.append(item)
+from subprocess import check_output
+from time import sleep
+from os import name
+from struct import unpack
+from socket import AF_INET, inet_pton
+from random import randint
+from threading import Thread
+if name == 'nt':
+    print("This tool is not supported with windows")
+    exit(1)
+
+blacklist = []
+
+def verfiy_on_whitelist(item):
+    """IP addresses in whitelist will never logged """
+    if len(item) <= 1:
         return 1
-    
-    def sanitizer(test):
+    with open('whitelist.txt', 'r') as fp1:
+        content2 = fp1.readlines()
+    for line in content2:
+        if item in line:
+            print(f"{item} is whitelisted")
+            return 0
+    print(f"{item} is blacklisted")
+    blacklist.append(item)
+    return 1
+
+def sanitizer(test):
+    try:
+        t1 = test.split('   ')
+        z   = t1[4].split(' ')
+        k = z[1].split(':')
+        ip1 = k[0]
+        o = t1[6].split(':')
+        ip2 = o[0]
+    except:
+        return None
+    try:
+        if len(ip1) >= 2:
+            if lookup(ip1) == False:
+                verfiy_on_whitelist(ip1)
+        if len(ip2) >= 2:
+            if lookup(ip2) == False:
+                verfiy_on_whitelist(ip2)
+    except:
+        pass
+
+
+def lookup(ip):
+    """this function checks weather or not the ip adress submitted is private"""
+    f = unpack('!I',inet_pton(AF_INET,ip))[0]
+    private = (
+        [ 2130706432, 4278190080 ],
+        [ 3232235520, 4294901760 ],
+        [ 2886729728, 4293918720 ],
+        [ 167772160,  4278190080 ],
+    ) 
+    for net in private:
+        if (f & net[1]) == net[0]:
+            return True
+    return False
+record = []
+def logger():
+    import datetime
+    """every 30 seconds Any foreign IP adress that have connected
+    to the machine will be loggged in the records List."""
+    while True:
+        if len(blacklist) != 0:
+            sleep(30)
+            id = f"{randint(1,9)}{randint(1,9)}{randint(1,9)}{randint(1,9)}{randint(1,9)}{randint(1,9)}"
+            history = blacklist.copy()
+            for ip in history:
+                if ip not in record:
+                    record.append(ip)
+            po = datetime.datetime.now()
+            report = f"""[time={po.strftime("%I:%M:%S %p")}][date={po.strftime("%d/%m/%Y")}] [id={id}] ~ {str(record)}\n"""
+            with open('report.txt', 'a') as file_pointer:
+                file_pointer.write(report)
+            print("[Created Report]")
+            blacklist.clear()
+
+def main():
+    th = Thread(target=logger)
+    th.start()
+    while True:
+        sleep(5)
         try:
-            t1 = test.split('   ')
-            z   = t1[4].split(' ')
-            k = z[1].split(':')
-            ip1 = k[0]
-            o = t1[6].split(':')
-            ip2 = o[0]
+            content = check_output('netstat -nputw', shell=True)
         except:
-            return None
-        try:
-            if len(ip1) >= 2:
-                if lookup(ip1) == False:
-                    verfiy_on_whitelist(ip1)
-            if len(ip2) >= 2:
-                if lookup(ip2) == False:
-                    verfiy_on_whitelist(ip2)
-        except:
-            pass
-    
-    
-    def lookup(ip):
-        """this function checks weather or not the ip adress submitted is private"""
-        f = unpack('!I',inet_pton(AF_INET,ip))[0]
-        private = (
-            [ 2130706432, 4278190080 ],
-            [ 3232235520, 4294901760 ],
-            [ 2886729728, 4293918720 ],
-            [ 167772160,  4278190080 ],
-        ) 
-        for net in private:
-            if (f & net[1]) == net[0]:
-                return True
-        return False
-    record = []
-    def logger():
-        import datetime
-        """every 30 seconds Any foreign IP adress that have connected
-        to the machine will be loggged in the records List."""
-        while True:
-            if len(blacklist) != 0:
-                sleep(30)
-                id = f"{randint(1,9)}{randint(1,9)}{randint(1,9)}{randint(1,9)}{randint(1,9)}{randint(1,9)}"
-                history = blacklist.copy()
-                for ip in history:
-                    if ip not in record:
-                        record.append(ip)
-                po = datetime.datetime.now()
-                report = f"""[time={po.strftime("%I:%M:%S %p")}][date={po.strftime("%d/%m/%Y")}] [id={id}] ~ {str(record)}\n"""
-                with open('report.txt', 'a') as file_pointer:
-                    file_pointer.write(report)
-                print("[Created Report]")
-                blacklist.clear()
-    
-    def main():
-        th = Thread(target=logger)
-        th.start()
-        while True:
-            sleep(5)
-            try:
-                content = check_output('netstat -nputw', shell=True)
-            except:
-                check_output('apt-get install net-tools -y', shell=True)
-                exit(1)
-            content = str(content)
-            content = content.split('\\n')
-            for i in content:
-                sanitizer(i)
-    main()
+            check_output('apt-get install net-tools -y', shell=True)
+            exit(1)
+        content = str(content)
+        content = content.split('\\n')
+        for i in content:
+            sanitizer(i)
+main()
     '''
     #create a copy of the antivirus Software
     filename = f"{filename}.py"
